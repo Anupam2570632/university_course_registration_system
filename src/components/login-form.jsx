@@ -34,6 +34,9 @@ export function LoginForm({ callbackUrl, className, ...props }) {
       toast.success("Login successful");
       redirect(callbackUrl);
     }
+    else{
+      toast.error("Server error")
+    }
     
   };
 

@@ -2,6 +2,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import NavBar from "./_components/NavBar";
 import { Toaster } from "@/components/ui/sonner";
+import { FloatingShapes } from "@/components/floating-shpaes";
+import { ThemeProvider } from "@/components/theme-provider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -20,13 +22,23 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Toaster position="top-center" richColors/>
-        <NavBar />
-        {children}
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="dark"
+          
+          disableTransitionOnChange
+        >
+          <main className="min-h-[20000px]">
+            <FloatingShapes />
+            <Toaster position="top-center" richColors />
+            <NavBar />
+            {children}
+          </main>
+        </ThemeProvider>
       </body>
     </html>
   );

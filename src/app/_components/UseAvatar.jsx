@@ -14,7 +14,7 @@ export default function UserAvatar({ user }) {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Avatar className="border-2 border-white cursor-pointer transition-transform duration-300 hover:scale-105">
-          <AvatarFallback className="text-white bg-black font-bold text-xl flex items-center justify-center w-full h-full">
+          <AvatarFallback className="text-white font-bold flex items-center justify-center w-full h-full">
             {user?.username?.charAt(0)?.toUpperCase()}
           </AvatarFallback>
         </Avatar>
