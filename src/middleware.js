@@ -1,16 +1,9 @@
 import { NextResponse } from "next/server";
+import { getCurrentUser } from "./app/action";
 
-export function middleware(request) {
-  const userCookie = request.cookies.get("user")?.value;
+export async function middleware(request) {
 
-  let user = null;
-  try {
-    if (userCookie) {
-      user = JSON.parse(decodeURIComponent(userCookie));
-    }
-  } catch (error) {
-    console.error("Failed to parse user cookie:", error);
-  }
+  const user = await getCurrentUser();
 
   const { pathname } = request.nextUrl;
 

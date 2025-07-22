@@ -16,15 +16,25 @@ import { redirect } from "next/navigation";
 
 export function LoginForm({ callbackUrl, className, ...props }) {
   const handleSubmit = async (formData) => {
-    formData.append("callbackUrl", callbackUrl || "/");
-
     const result = await handleLogin(formData);
-    redirect("/");
-    // console.log(result)
 
-    // // if(result.type='success'){
-    // //   toast.success('Login Successful')
-    // // }
+
+    console.log("login res", result)
+
+    if (result == 404) {
+      toast.error("User not found");
+    }
+    if (result == 401) {
+      toast.warning("Password is incorrect");
+    }
+    if (result == 500) {
+      toast.error("Internal server error");
+    }
+    if (result?.type == "success") {
+      toast.success("Login successful");
+      redirect(callbackUrl);
+    }
+    
   };
 
   return (
