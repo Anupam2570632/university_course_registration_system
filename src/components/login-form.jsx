@@ -1,4 +1,5 @@
 "use client";
+
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
@@ -12,32 +13,28 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { handleLogin } from "@/app/action";
 import { toast } from "sonner";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation"; 
 
 export function LoginForm({ callbackUrl, className, ...props }) {
+  const router = useRouter(); 
+
   const handleSubmit = async (formData) => {
     const result = await handleLogin(formData);
 
+    console.log("login res", result);
 
-    console.log("login res", result)
-
-    if (result == 404) {
+    if (result === 404) {
       toast.error("User not found");
-    }
-    if (result == 401) {
+    } else if (result === 401) {
       toast.warning("Password is incorrect");
-    }
-    if (result == 500) {
+    } else if (result === 500) {
       toast.error("Internal server error");
-    }
-    if (result?.type == "success") {
+    } else if (result?.type === "success") {
       toast.success("Login successful");
-      redirect(callbackUrl);
+      router.push(callbackUrl); 
+    } else {
+      toast.error("Server error");
     }
-    else{
-      toast.error("Server error")
-    }
-    
   };
 
   return (
